@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+
+{% block adminLogin %}
+
+<style>
+  .container-fluid {
+    position: relative;
+    /* border: 1px solid black; */
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 100;
+  }
+
+  .wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* box-shadow: 0 0 10px #027581; */
+    box-shadow: none;
+  }
+
+  .wrapper a {
+    text-decoration: none;
+    color: #000;
+  }
+
+  .cardName {
+    font-family: Algerian;
+  }
+
+  .formCard {
+    height: 300px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+
+  }
+
+  .formContent {
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+
+  .formContent .text_field {
+    position: relative;
+    border-bottom: 2px solid #adadad;
+    margin: 30px 0;
+  }
+
+  .text_field .inputFields {
+    width: 100%;
+    padding: 0 5px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+  }
+
+  .text_field .labels {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #adadad;
+    transform: translateY(-50%);
+    font-size: 15px;
+    pointer-events: none;
+    transition: 0.5s;
+  }
+
+  .text_field .extraSpan::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #027581;
+    transition: 0.5s;
+  }
+
+  .text_field .inputFields:focus~.labels,
+  .text_field .inputFields:valid~.labels {
+    top: -5px;
+    color: #027581;
+  }
+
+  .text_field .inputFields:focus~.extraSpan::before,
+  .text_field .inputFields:valid~.extraSpan::before {
+    width: 100%;
+  }
+
+  .submit {
+    float: right;
+    width: 100px;
+    height: 35px;
+    border: 1px solid;
+    background: #027581;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #e0f4fb;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .submit:hover {
+    border-color: #027581;
+    transition: 0.5s;
+  }
+
+  .closeBtn {
+    /* border: 1px solid black; */
+    float: right;
+    top: 0;
+  }
+</style>
+
+
+
+<div class="container-fluid">
+  <div class="wrapper col-sm-4">
+    <div class="card formCard">
+      <div class="card-body">
+
+        <a href="/index">
+          <span class="closeBtn"><i class="fa fa-times"></i></span>
+        </a>
+
+        <h4 class="card-title cardName"> Login Here </h4>
+
+        <form class="formContent" action="/accounts/login" method="POST">
+          {% csrf_token %}
+          <div class="text_field">
+            <input type="text" class="inputFields" name="username" id="username" autocomplete="off" required>
+            <span class="extraSpan"></span>
+            <label for="username" class="labels">Username</label>
+          </div>
+          <div class="text_field">
+            <input type="password" class="inputFields" name="password" id="password" autocomplete="off" required>
+            <span class="extraSpan"></span>
+            <label for="pass" class="labels">Password</label>
+          </div>
+          <button type="submit" class="submit" name="submit" id="submitBtn">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

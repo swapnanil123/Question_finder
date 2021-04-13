@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block index %}
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Castoro&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Benne&display=swap');
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: #027581;
+        z-index: 1;
+    }
+
+    .header {
+        /* border: 1px solid black; */
+        margin-top: 6rem;
+        padding: 0;
+        text-align: center;
+        font-size: 50px;
+        font-family: 'Benne', serif;
+        color: #F2F2F0;
+    }
+
+    .websiteName {
+        font-size: 2.5rem;
+        font-family: 'sansarif';
+        color: #F2F2F0;
+    }
+
+    .massage {
+        /* border: 1px solid black; */
+        font-size: .8rem;
+        text-align: center;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        text-transform: uppercase;
+        color: #F2F2F0;
+    }
+
+    .main {
+        /* border: 1px solid black; */
+        margin-top: 1rem;
+        text-align: center;
+        font-size: 2rem;
+        font-family: sans-serif;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .arrowIcon {
+        border: none;
+        font-size: 2.5rem;
+        color: silver;
+    }
+
+    .fa {
+        color: #F2F2F0;
+    }
+
+    .arrowIcon a {
+        text-decoration: none;
+        color: #000;
+    }
+
+    .adminLog {
+        margin-top: 1rem;
+        margin-right: 1rem;
+    }
+
+    .adminLog a {
+        text-decoration: none;
+        color: #fff;
+        font-size: 1.1rem;
+        font-family: 'Benne', serif;
+    }
+
+    @media only screen and (max-width: 560px) {
+        .websiteName {
+            display: block;
+        }
+        .header{
+            font-size: 27px;
+        }
+    }
+</style>
+
+<body>
+    <div class="wrapperClass">
+        <div class="adminLog text-right">
+            {% if user.is_authenticated %}
+            <a href="/adminDashBoard">
+                <span><i class="fa fa-user-circle"></i></span>
+                <span>Admin</span>
+            </a>
+            {% else %}
+            <a href="/adminLogin">
+                <span><i class="fa fa-user-circle"></i></span>
+                <span>Admin</span>
+            </a>
+            {% endif %}
+        </div>
+
+        <!-- block  -->
+
+
+        <div class="container text-responsive">
+
+            <div class="header">
+                <!-- <span>
+                    Srikrishna College, Bagula
+                </span> -->
+                <span>
+                    Welcome to Paper Hunter
+                </span>
+            </div>
+
+            <!-- <div class="massage">
+                <span>
+                    make your life easier
+                </span>
+            </div> -->
+
+            <div class="main">
+                <span class="arrowIcon">
+                    <a href="/home">
+                        <i class="fa fa-arrow-circle-right fa-lg"></i>
+                    </a>
+                </span>
+            </div>
+        </div>
+
+
+        <!-- end-->
+    </div>
+
+</body>
+
+
+{% endblock %}

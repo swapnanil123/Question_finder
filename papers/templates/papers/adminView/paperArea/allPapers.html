@@ -1,0 +1,297 @@
+{% extends 'base.html' %}
+
+{% block allPaper %}
+
+{% load static %}
+
+<style>
+    main {
+        margin-top: 60px;
+        background: #f1f5f9;
+        min-height: 90vh;
+        padding: 1rem 3rem;
+    }
+
+    .dash_titile {
+        color: var(--color-dark);
+        margin-bottom: .5rem;
+        font-family: Algerian;
+        font-size: 1.8rem;
+    }
+
+    .paper_add_btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        border: 2px solid #fff;
+        border-radius: 8px;
+        width: 180px;
+        height: 38px;
+        cursor: pointer;
+        background: var(--main-color);
+        color: #fff;
+    }
+
+    .successAlert {
+        margin: 0;
+        margin-top: .8rem;
+        padding-left: 1rem;
+        padding: 8px;
+        display: none;
+    }
+
+    .recent {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .activity_card {
+        background: #fff;
+        border-radius: 7px;
+        margin-bottom: 1rem;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .activity_card h3 {
+        color: var(--text-grey);
+        margin: 1rem;
+        font-size: 1.5rem;
+        font-family: sans-serif;
+    }
+
+    .activity_card table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .activity_card thead {
+        background: #efefef;
+        text-align: left;
+    }
+
+    .activity_card tbody {
+        text-align: left;
+    }
+
+    th,
+    td {
+        font-size: .9rem;
+        padding: 1rem 1rem;
+        color: var(--color-dark);
+    }
+
+    tbody tr:nth-child(even) {
+        background: #f9fafc;
+    }
+
+    .event_icon {
+        text-decoration: none;
+        color: var(--color-dark);
+    }
+
+    .card_footer {
+        height: 30px;
+        display: block;
+        /* border:1px solid black; */
+    }
+
+    .card_footer a {
+        text-decoration: none;
+    }
+
+    .card_footer span {
+        float: right;
+        margin-right: 1rem;
+        font-size: 1.2rem;
+        color: var(--color-dark);
+    }
+
+    .table_responsive {
+        overflow-x: auto;
+    }
+    .deleteBtn {
+        cursor: pointer;
+    }
+    .editBtn {
+        cursor: pointer;
+    }
+    /* main style end */
+
+    @media only screen and (max-width: 1200px) {
+        .sidebar {
+            width: 60px;
+            z-index: 150;
+        }
+
+        .sidebar .sidebar_header h3 span,
+        .sidebar li span:last-child {
+            display: none;
+        }
+
+        .sidebar .sidebar_header,
+        .sidebar li {
+            display: flex;
+            justify-content: center;
+        }
+
+        .main_content {
+            margin-left: 60px;
+        }
+
+        .main_content header {
+            left: 60px;
+        }
+
+        #sidebar_toggle:checked~.sidebar {
+            width: 240px;
+            padding-left: 1rem;
+        }
+
+        #sidebar_toggle:checked~.sidebar .sidebar_header h3 span:last-child,
+        #sidebar_toggle:checked~.sidebar li span:last-child {
+            display: inline;
+        }
+
+        #sidebar_toggle:checked~.sidebar .sidebar_header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #sidebar_toggle:checked~.sidebar li {
+            display: block;
+        }
+
+        #sidebar_toggle:checked~.main_content {
+            margin-left: 60px;
+        }
+
+        #sidebar_toggle:checked~.main_content header {
+            left: 60px;
+        }
+
+        header {
+            position: fixed;
+            width: calc(100% - 60px);
+            transition: 300ms;
+        }
+    }
+
+    @media only screen and (max-width: 860px) {
+        .dash_cards {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .card_single {
+            margin-bottom: 1rem;
+        }
+
+        header {
+            position: fixed;
+            width: calc(100% - 60px);
+            transition: 300ms;
+        }
+    }
+
+    @media only screen and (max-width: 600px) {
+        .dash_cards {
+            grid-template-columns: 100%;
+        }
+    }
+
+    @media only screen and (max-width: 450px) {
+        main {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        header {
+            position: fixed;
+            width: calc(100% - 60px);
+            transition: 300ms;
+        }
+
+        .search_wrapper input {
+            width: 100px;
+            /* border: 1px solid black; */
+        }
+
+        .social_icons div {
+            display: none;
+        }
+
+        .admin_name {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+{% block adminHeader %} {% include 'papers/adminView/adminHeader.html' %} {% endblock %}
+
+{% block addPaper %} {% include 'papers/adminView/paperArea/addPaperModal.html' %} {% endblock %}
+{% block editPaper %} {% include 'papers/adminView/paperArea/editPaperModal.html' %} {% endblock %}
+
+
+<div class="main_content">
+    <main>
+
+        <h2 class="dash_titile">Papers</h2>
+
+        <div class="add_btn">
+            <div class="paper_add_btn ml-auto" data-target="#addPaperModal" data-toggle="modal">
+                <span><i class="fa fa-plus-circle fa-lg"></i></span>
+                <span>Add New Paper</span>
+            </div>
+        </div>
+
+
+        <div class="alert alert-success successAlert" role="alert" id="alert">
+            New Paper Added Successfully
+        </div>
+
+        <section class="recent">
+            <div class="activity_card">
+                <h3>All Paper</h3>
+
+                <div class="table_responsive">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Paper</th>
+                                <th>Subject</th>
+                                <th>Semester</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody id="papertableBody">
+                            {% for allPaperDetails in allPaperDetails %}
+                            <tr id="paper_id_{{allPaperDetails.id}}">
+                                <td id="paperName_id_{{allPaperDetails.id}}">{{allPaperDetails.paperName}}</td>
+                                <td id="subjectName_id_{{allPaperDetails.id}}">{{allPaperDetails.subjectName}}</td>
+                                <td id="semesterName_id_{{allPaperDetails.id}}">{{allPaperDetails.semesterName}}</td>
+                                <td class="editBtn" data-target="#editPaperModal" data-toggle="modal"
+                                    onclick="editPaper(`{{allPaperDetails.id}}`)">
+                                    <i class="fa fa-edit fa-lg event_icon"></i>
+                                </td>
+                                <td class="deleteBtn" onclick="removePaper(`{{allPaperDetails.id}}`)">
+                                    <i class="fa fa-trash fa-lg event_icon"></i>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+</div>
+
+
+<script src="{% static 'papers/js/allPapers.js' %}"></script>
+
+{% endblock %}

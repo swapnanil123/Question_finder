@@ -1,0 +1,152 @@
+{% block adminSidebar %} {% include 'papers/adminView/adminSidebar.html' %} {% endblock %}
+
+<style>
+    .main_content {
+        position: relative;
+        margin-left: 240px;
+        transition: margin-left 300ms;
+    }
+
+    header {
+        position: fixed;
+        left: 240px;
+        top: 0;
+        z-index: 100;
+        width: calc(100% - 240px);
+        background: #fff;
+        height: 60px;
+        padding: 0rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--text-grey);
+        transition: 300ms;
+    }
+
+    .search_wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .search_wrapper input {
+        border: 0;
+        outline: 0;
+        padding: 1rem;
+        height: 38px;
+    }
+
+    .social_icons {
+        display: flex;
+        align-items: center;
+    }
+
+    .social_icons div {
+        margin-left: 1.2rem;
+    }
+
+    .social_icons div {
+        height: 38px;
+        width: 38px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        /* background-image: url('./swapnanil.jpg'); */
+        border-radius: 50%;
+    }
+
+    .admin_name {
+        margin: 15px;
+        font-size: 1rem;
+        color: var(--color-dark);
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    #sidebar_toggle:checked~.main_content {
+        margin-left: 60px;
+    }
+
+    #sidebar_toggle:checked~.main_content header {
+        left: 60px;
+        width: calc(100% - 60px);
+        transition: 300ms;
+    }
+
+    #sidebar_toggle:checked~.main_content header {
+        left: 60px;
+        width: calc(100% - 60px);
+        transition: 300ms;
+    }
+
+
+    @media only screen and (max-width: 1200px) {
+
+        .main_content {
+            margin-left: 60px;
+        }
+
+        .main_content header {
+            left: 60px;
+        }
+
+        #sidebar_toggle:checked~.main_content {
+            margin-left: 60px;
+        }
+
+        #sidebar_toggle:checked~.main_content header {
+            left: 60px;
+        }
+
+        header {
+            position: fixed;
+            width: calc(100% - 60px);
+            transition: 300ms;
+        }
+    }
+
+    @media only screen and (max-width: 860px) {
+
+        header {
+            position: fixed;
+            width: calc(100% - 60px);
+            transition: 300ms;
+        }
+    }
+
+    @media only screen and (max-width: 450px) {
+
+        header {
+            position: fixed;
+            width: calc(100% - 60px);
+            transition: 300ms;
+        }
+
+        .search_wrapper input {
+            width: 100px;
+            /* border: 1px solid black; */
+        }
+
+        .social_icons div {
+            display: none;
+        }
+
+        .admin_name {
+            display: none;
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<div class="main_content">
+    <header>
+        <div class="search_wrapper">
+            <span><i class="fa fa-search fa-lg"></i></span>
+            <input type="search" name="" id="" placeholder="Search">
+        </div>
+
+        <div class="social_icons">
+            <div></div>
+            {% if user.is_authenticated %}
+            <span class="admin_name text-justify"> {{user.username}}</span>
+            {% endif %}
+        </div>
+    </header>
+</div>

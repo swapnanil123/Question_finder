@@ -1,0 +1,202 @@
+<style>
+    :root {
+        --main-color: #027581;
+        --color-dark: #1D2231;
+        --text-grey: #8390A2;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    #sidebar_toggle {
+        display: none;
+    }
+
+    .sidebar {
+        height: 100%;
+        width: 240px;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 100;
+        background: var(--main-color);
+        color: #fff;
+        overflow-y: auto;
+        transition: 300ms;
+    }
+
+    .sidebar_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 60px;
+        padding: 0rem 1rem;
+        font-size: 1rem;
+        text-transform: uppercase;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .sidebar_header .websitename {
+        font-size: 1.1rem;
+    }
+
+    .sidebar_header .bars {
+        cursor: pointer;
+    }
+
+    .sidebar_menu {
+        padding: 1rem;
+    }
+
+    .sidebar li {
+        list-style: none;
+        margin-bottom: 1.2rem;
+    }
+
+    .sidebar a {
+        text-decoration: none;
+        color: #ffff;
+        font-size: 1rem;
+        font-family: Algerian;
+    }
+
+    .sidebar a span:last-child {
+        padding-left: 1rem;
+    }
+
+    #sidebar_toggle:checked~.sidebar {
+        width: 60px;
+    }
+
+    #sidebar_toggle:checked~.sidebar .sidebar_header h3 span:last-child,
+    #sidebar_toggle:checked~.sidebar li span:last-child {
+        display: none;
+    }
+
+    #sidebar_toggle:checked~.sidebar .sidebar_header,
+    #sidebar_toggle:checked~.sidebar li {
+        display: flex;
+        justify-content: center;
+    }
+
+    #sidebar_toggle:checked~.main_content {
+        margin-left: 60px;
+    }
+
+    #sidebar_toggle:checked~.main_content header {
+        left: 60px;
+        width: calc(100% - 60px);
+        transition: 300ms;
+    }
+
+    @media only screen and (max-width: 1200px) {
+        .sidebar {
+            width: 60px;
+            z-index: 150;
+        }
+
+        .sidebar .sidebar_header h3 span,
+        .sidebar li span:last-child {
+            display: none;
+        }
+
+        .sidebar .sidebar_header,
+        .sidebar li {
+            display: flex;
+            justify-content: center;
+        }
+
+        #sidebar_toggle:checked~.sidebar {
+            width: 240px;
+            padding-left: 1rem;
+        }
+
+        #sidebar_toggle:checked~.sidebar .sidebar_header h3 span:last-child,
+        #sidebar_toggle:checked~.sidebar li span:last-child {
+            display: inline;
+        }
+
+        #sidebar_toggle:checked~.sidebar .sidebar_header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #sidebar_toggle:checked~.sidebar li {
+            display: block;
+        }
+
+        #sidebar_toggle:checked~.main_content {
+            margin-left: 60px;
+        }
+
+        #sidebar_toggle:checked~.main_content header {
+            left: 60px;
+        }
+    }
+</style>
+
+
+
+<input type="checkbox" id="sidebar_toggle">
+<div class="sidebar">
+    <div class="sidebar_header">
+        <a href="/index">
+            <h3 class="websitename">
+                <span><strong>PAPER HUNTER</strong></span>
+            </h3>
+        </a>
+        <label for="sidebar_toggle" class="bars"><i class="fa fa-bars"></i></label>
+    </div>
+
+    <div class="sidebar_menu">
+        <ul>
+            <li>
+                <a href="/adminDashBoard">
+                    <span><i class="fa fa-home"></i></span>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="/allSubject">
+                    <span><i class="fa fa-book"></i></span>
+                    <span>Subjects</span>
+                </a>
+            </li>
+            <li>
+                <a href="/allPaper">
+                    <span><i class="fa fa-sticky-note"></i></span>
+                    <span>Papers</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <span><i class="fa fa-address-book"></i></span>
+                    <span>Semester</span>
+                </a>
+            </li>
+            <li>
+                <a href="/allQtnPaper">
+                    <span><i class="fa fa-paper-plane"></i></span>
+                    <span>Question Papers</span>
+                </a>
+            </li>
+            {% if user.is_superuser %}
+            <li>
+                <a href="/accounts/register">
+                    <span><i class="fa fa-user-plus"></i></span>
+                    <span>Add New Admin</span>
+                </a>
+            </li>
+            {% endif%}
+            <li>
+                <a href="/accounts/logout">
+                    <span><i class="fa fa-sign-out"></i></span>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

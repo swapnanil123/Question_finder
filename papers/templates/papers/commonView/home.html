@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+
+{% block home %}
+
+{% load static %}
+
+<!-- {% block navbar %} {% include 'papers/commonView/navbar.html' %} {% endblock %} -->
+
+<style>
+    /* home */
+
+    /* .contentWrapper {
+        border:  10px solid rebeccapurple;
+        position: relative;
+        margin-top: 45px;
+        height: calc(100vh - 45px);
+
+    } */
+
+    .main {
+        display: flex;
+        height: 280px;
+        /* padding: 20px; */
+        justify-content: center;
+        align-items: center;
+        /* border: 1px solid black; */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        border-radius: 8px;
+        box-shadow: 0px 0px 20px #BCBCBC;
+    }
+
+    .selectBox {
+        /* width: 350px; */
+        border: 0;
+        height: 40px;
+        border: 2px solid #027581;
+        border-radius: 5px;
+        background: #fff;
+        /* box-shadow: #027581; */
+    }
+
+    .custom_selectBox {
+        position: relative;
+    }
+
+    .custom-arrow {
+        position: absolute;
+        display: block;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 3rem;
+        background: #027581;
+        pointer-events: none;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .custom-arrow::before,
+    .custom-arrow::after {
+        content: "";
+
+        position: absolute;
+        width: 0;
+        height: 0;
+
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .custom-arrow::after {
+        border-left: 0.5em solid transparent;
+        border-right: 0.5em solid transparent;
+        border-top: 0.6em solid rgba(0, 0, 0, 0.6);
+    }
+
+    .findBtn {
+        border: 2px solid #027581;
+    }
+
+    .findBtn:hover {
+        background: #027581;
+        color: #fff;
+    }
+
+    .firstselectBox {
+        margin-bottom: 25px;
+    }
+
+    .footer {
+        display: flex;
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+        top: 80%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid transparent;
+        height: auto;
+        font-size: 22px;
+        /* box-shadow: 0px 0px 20px #BCBCBC; */
+        color: teal;
+        font-family: fantasy;
+    }
+
+
+    @media screen and (max-width: 480px) {
+        .firstselectBox {
+            margin-bottom: 30px;
+        }
+
+        .main {
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+    }
+
+    /* home */
+
+    /* nav */
+
+    .brandName a {
+        text-decoration: none !important;
+        color: #fff;
+        font-family: 'Benne', serif;
+    }
+
+    .brandName a:hover {
+        color: #fff;
+    }
+
+    .navbar {
+        position: fixed;
+        top: 0;
+        height: 40px;
+        padding: 0 15px 0 15px;
+        z-index: 100;
+        width: 100%;
+        background: #027581;
+    }
+
+    @media screen and (max-width: 560px) {
+        .brandName {
+            font-size: 18px;
+        }
+    }
+
+    /* nav */
+</style>
+
+<!-- nav bar -->
+
+<nav class="navbar position-fixed">
+    <span class="navbar-brand brandName">
+        <a href="/index">
+            <!-- <strong> Srikrishna College, Bagula </strong> -->
+            <strong> Paper Hunter </strong>
+
+        </a>
+    </span>
+
+</nav>
+
+<!-- nav bar -->
+
+
+<div class="container main col-sm-5">
+    <!-- <div class="col-md-8"> -->
+    <form class="col-12" method="POST" id="qtnFileForm" action="/qtnPaper">
+        {% csrf_token%}
+
+        <div class="row">
+            <div class="col-12">
+                <div class="custom_selectBox">
+                    <select name="subject_name" id="subject" class="selectBox firstselectBox form-control shadow-none"
+                        required>
+                        <option value="" selected disabled>Select Subject Here</option>
+                        {% for subjectname in subjectName %}
+                        <option id="subjectName" value="{{subjectname.subjectName}}">{{subjectname.subjectName}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <span class="custom-arrow"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 ">
+                <div class="custom_selectBox">
+                    <select name="sem" id="semester" onchange="getPaperName()"
+                        class="selectBox firstselectBox form-control shadow-none">
+                        <option value="" selected disabled>Select Semester Here</option>
+                        {% for semester in sem %}
+                        <option id="semName" value="{{semester.semesterName}}">{{semester.semesterName}}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="custom-arrow"></span>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="custom_selectBox">
+                    <select name="paper" id="paper" class="selectBox form-control shadow-none" required>
+                        <option value="" selected disabled>Select Paper Here</option>
+                    </select>
+                    <span class="custom-arrow"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-light btn-sm findBtn">
+                FIND NOW
+            </button>
+        </div>
+    </form>
+    <!-- </div> -->
+
+</div>
+
+<div class="footer container col-sm-5" id="msg">
+    {% if messages %}
+    {% for message in messages %}
+    <strong> {{message}} </strong>
+    {% endfor %}
+    {% endif %}
+</div>
+
+
+
+<script src="{% static 'papers/js/home.js' %}"></script>
+
+{% endblock %}
